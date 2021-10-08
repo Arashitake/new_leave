@@ -1,15 +1,18 @@
 <template>
   <div id="homeContent">
+    <!-- <nav-bar></nav-bar> -->
     <div id="apply-record">
-      <router-link to="">申请记录</router-link>
+      <router-link to="/applyRecord">申请记录</router-link>
     </div>
     <div id="apply-write">
-      <router-link to="">请假申请</router-link>
+      <router-link to="/applyWrite">请假申请</router-link>
     </div>
   </div>
 </template>
 
 <script>
+  import navBar from '../homepage/navBar.vue'
+
   export default {
     name: 'homeContent',
     data() {
@@ -18,7 +21,7 @@
       }
     },
     components: {
-
+      navBar
     }
   }
 </script>

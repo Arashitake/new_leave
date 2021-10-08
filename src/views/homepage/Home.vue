@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-container>
+    <!-- <el-container>
       <el-main>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
@@ -11,17 +11,22 @@
           <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
         </el-breadcrumb>
       </el-main>
-      <!-- <el-footer>Footer</el-footer> -->
-    </el-container>
+    </el-container> -->
+    <!-- <nav-bar></nav-bar> -->
     <router-view/>
+    <home-content></home-content>
   </div>
 </template>
 
 <script>
+import navBar from '../homepage/navBar.vue'
+import homeContent from '../homepage/homeContent.vue'
+
 export default {
   name: 'Home',
   components: {
-    // HelloWorld
+    navBar,
+    homeContent
   }
 }
 </script>

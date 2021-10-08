@@ -1,25 +1,24 @@
 <template>
   <div id="app">
-    <nav-bar></nav-bar>
+    <div id="nav-bar-box">
+      <nav-bar v-if="!$route.meta.showNav"></nav-bar>
+    </div>
     <router-view/>
-    <home-content></home-content>
   </div>
 </template>
 
 <script>
 import navBar from './views/homepage/navBar.vue'
-import homeContent from './views/homepage/homeContent.vue'
 
 export default {
   name: 'app',
   components: {
-    navBar,
-    homeContent
+    navBar
   }
 }
 </script>
 
 
-<style scoped>
-
+<style>
+  @import "./assets/css/base.css";
 </style>
