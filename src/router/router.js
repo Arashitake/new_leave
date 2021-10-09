@@ -5,11 +5,28 @@ import applyWrite from '../views/apply/applyWrite.vue'
 import applyRecord from '../views/apply/applyRecord.vue'
 import registerSign from '../views/sign/register_sign.vue'
 import personalCenter from '../views/person/personCenter.vue'
+import managePage from '../views/admin/managePage.vue'
+import store from '../store'
+import approveTip from '../views/judgeMessage/approveTip.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'initHome',
+    path: '',
+    redirect: '/Home'
+  },
+  {
+    path: '/Home',
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      if(store.state.user == null || store.state.user == "") {
+        next({path: '/initHome'})
+      } else {
+        next()
+      }
+    }
+  },
+  {
+    path: '/initHome',
     component: initHome
   },
   {
@@ -39,8 +56,17 @@ const routes = [
     path: '/applyRecord',
     name: 'applyRecord',
     component: applyRecord
+  },
+  {
+    path: '/managePage',
+    name: 'managePage',
+    component: managePage
+  },
+  { // approveTip 审批假条页面
+    path: '/approveTip',
+    name: 'approveTip',
+    component: approveTip
   }
-
 ]
 
 export default routes

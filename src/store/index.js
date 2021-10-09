@@ -7,16 +7,19 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 定义响应式的数据，就类似于data，是全局
   state: {
-    user: {
-      nickname: "",
-      password: ""
-    }
+    // 存储token
+    user: localStorage.getItem('user')?JSON.parse(localStorage.getItem('user')): ''
   },
   // 定义改变state数据的行为
   mutations: {
-    changeUser(state, params) {
-      state.user.nickname = params.nickname;
-      state.user.password = params.password;
+    // 修改token，并将token存入localStorage
+    login(state, user) {
+      state.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
+    },
+    logout(state) {
+      state.user = null;
+      localStorage.removeItem('user');
     }
   },
   // actions是处理异步数据加载和提交mutations的机制。间接改变state

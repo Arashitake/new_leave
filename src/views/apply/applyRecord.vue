@@ -29,7 +29,7 @@
         currentIndex: 0,
         list: [{
           id: 1,
-          tag: '已审批',
+          tag: '未审批',
           abbData: [{
             title: '001'
           },{
@@ -37,7 +37,7 @@
           }]
         },{
           id: 2,
-          tag: '未审批',
+          tag: '已审批',
           abbData: [{
             title: '222'
           },{
@@ -47,21 +47,30 @@
       }
     },
     mounted() {
-      // this.https();
+      // this.applyMes();
     },
     methods: {
-      https() {
-        let that = this;    // 保存当前this
-        this.axios.get("https://service-dxtrccme-1302998929.gz.apigw.tencentcs.com/release/accordin")
-        .then(res => {
-          console.log(res);
-          let data = res.data.data[0];
-          that.dataList = data;
-          console.log(typeof(this.dataList));
+      applyMes() {
+        let that = this;
+        this.axios({
+          method: get,
+          url: 'api/tip/queryHistoryTip'
+        }).then(res => {
+          let historyList = res.data.data;
         })
-      }
-    },
-    methods: {
+
+        // let that = this;    // 保存当前this
+        // this.axios.get("https://service-dxtrccme-1302998929.gz.apigw.tencentcs.com/release/accordin")
+        // this.axios.get("api/tip/queryHistoryTip")
+        // this.axios.get("api/public/getArticles?page=0")
+        // .then(res => {
+        //   console.log(111);
+        //   console.log(res);
+          // let data = res.data.data[0];
+          // that.dataList = data;
+          // console.log(typeof(this.dataList));
+        // })
+      },
       change: function(index) {
         this.currentIndex = index;
       }
@@ -90,6 +99,7 @@
   border-radius: 0 50px 0 50px;
   box-shadow: 4px 4px 10px rgba(53, 74, 94, 0.25);
   overflow: hidden;
+  z-index: 100;
 }
 
 .side-nav-bar li {
@@ -99,6 +109,7 @@
   color: #418771;
   font-weight: bold;
   cursor: pointer;
+  background: #fff;
   border: 1px solid #418771;
 }
 
@@ -118,7 +129,7 @@
 /* 被选中的选项 */
 .tab-selected {
   color: #fff !important;
-  background: #488c76;
+  background: #488c76 !important;
 }
 
 /* ----------------- 右侧内容页 ----------------- */

@@ -11,8 +11,26 @@ module.exports = {
         'common': '@/common',
         'components': '@/components',
         'network': '@/network',
-        'views': '@/views'
+        'views': '@/views',
+        'store': '@/store'
+      }
+    }
+  },
+  // 反向代理
+  devServer: {
+    port: 1234,    //端口号
+    disableHostCheck: true,   //是否可以被其他设备访问
+    proxy: {
+      'api/': {
+        target: 'http://localhost:8080',       // 访问数据的服务器的地址
+        // target: 'http://192.168.43.205:8888',
+        changeOrigin: true,     // 是否允许其他设备访问，禁用主机检查
+        pathRewrite: {
+          '^/api':''   // 替换掉api
+        }
       }
     }
   }
+
 }
+

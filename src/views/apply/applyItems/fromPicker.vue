@@ -93,7 +93,6 @@
         date1: '',
         date2: '',
         delivery: false,
-        type: [],
         resource: '',
         desc: '',
       },
@@ -101,20 +100,50 @@
   },
   methods: {
     onSubmit() {
-      console.log(this.form);
+      this.postLeaveTip();
       console.log('submit!')
     },
     getStartTime(val) {
       this.form.date1 = val;
-      console.log("date1: "+val);
       return this.form.date1;
     },
     getEndTime(val) {
       this.form.date2 = val;
-      console.log("date2: "+val);
       return this.form.date2;
     },
-
+    // 判断为哪一类假条类型
+    judgeresource(resource) {
+      let resNum = 0;
+      if(resource == '事假') {
+        resNum = 1;
+      } else if(resource == '病假') {
+        resNum = 2;
+      } else if(resource == '工假') {
+        resNum = 3;
+      }
+      return resNum;
+    },
+    // 发送请假申请
+    postLeaveTip() {
+      this.axios({
+        method: 'post',
+        url: 'api/tip/askLeave',
+        data: {
+          stuAccount: this.$store.state.user.account,
+          typeId: this.judgeresource(this.form.resource),
+          tipReason: this.form.desc,
+          tipStart: new Date(this.form.date1+' '+this.form.region1),
+          tipEnd: new Date(this.form.date2+' '+this.form.region2),
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        console.log(res);
+      }).catch(error => {
+        console.log(error);
+      })
+    }
   },
     components: {
 

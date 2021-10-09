@@ -6,7 +6,15 @@
       :visible.sync="centerDialogVisible"
       width="800px"
       center>
-      <span>需要注意的是内容是默认不居中的</span>
+      <!-- 请假内容 -->
+      <ul class="record-detail">
+        <li>开始时间：</li>
+        <li>结束时间：</li>
+        <li>请假时长：</li>
+        <li>请假原因：</li>
+        <li>审批状态：</li>
+      </ul>
+      <div></div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
@@ -29,9 +37,6 @@
 </script>
 
 <style scoped>
-.el-dialog {
-}
-
 /* ------------- 按钮 ------------- */
 .el-button {
   width: 200px;
@@ -48,7 +53,15 @@
 }
 
 .el-button:hover {
+  color: #fff;
   background: #40b682;
   box-shadow: 4px 4px 10px rgba(53, 74, 94, 0.25);
 }
+
+.el-button:focus {
+  color: #418771;
+  font-weight: bold;
+}
+
+/* ----------------- 请假细节 record-detail ------------------- */
 </style>

@@ -1,12 +1,23 @@
 <template>
   <div id="homeContent">
-    <!-- <nav-bar></nav-bar> -->
-    <div id="apply-record">
-      <router-link to="/applyRecord">申请记录</router-link>
-    </div>
-    <div id="apply-write">
-      <router-link to="/applyWrite">请假申请</router-link>
-    </div>
+  <!-- 普通学生&副班 -->
+    <router-link to="/applyRecord">
+      <div class="jump-router" v-show="this.getAuthority <= 1">申请记录</div>
+    </router-link>
+    <router-link to="/applyWrite">
+      <div class="jump-router" v-show="this.getAuthority <= 1">请假申请</div>
+    </router-link>
+  <!-- 副班 -->
+    <router-link to="/applyWrite">
+      <div class="jump-router" v-show="this.getAuthority == 1">请假审核</div>
+    </router-link>
+  <!-- 辅导员&管理员 -->
+    <router-link to="/myComponent">
+      <div class="jump-router" v-show="this.getAuthority >= 2">测试用的</div>
+    </router-link>
+    <router-link to="/approveTip">
+      <div class="jump-router" v-show="this.getAuthority >= 2">请假审批</div>
+    </router-link>
   </div>
 </template>
 
@@ -18,6 +29,11 @@
     data() {
       return {
 
+      }
+    },
+    computed: {
+      getAuthority() {
+        return this.$store.state.user ? this.$store.state.user.Authority : '';
       }
     },
     components: {
@@ -38,13 +54,25 @@
   /* border: 1px solid #f00; */
 }
 
-#apply-record, #apply-write {
+.jump-router {
   width: 200px;
   height: 60px;
   margin: 5px 0;
   line-height: 60px;
   text-align: center;
+  letter-spacing: 3px;
+  font-size: 18px;
+  color: #fff;
+  background: #488c76;
   border: 1px solid #134482;
+  box-shadow: .1px .1px .1px #000;
+  transition: all ease-in-out .2s;
+}
+
+.jump-router:hover {
+  color: #34475d;
+  box-shadow: .1px .1px .1px #000;
+  background: #fff;
 }
 
 </style>

@@ -2,17 +2,36 @@
   <div id="navBar">
     <div id="to-home">
       <router-link to="/Home">Home</router-link>
+      <router-link to="/managePage" v-show="this.getAuthority == 3">管理页</router-link>
     </div>
+
     <!-- <div id="to-apply"></div> -->
     <div class="person-box">
       <!-- 用是否登录来判断显示 -->
-      <div id="person"></div>
-      <router-link v-if="" to="/registerSign">
+
+      <router-link v-show="isLogin == null || isLogin == ''" to="/registerSign">
         <div id="sign-btn">注册/登录</div>
       </router-link>
-      <router-link v-if="" to="/personalCenter">
-        <div id="person-btn">个人中心</div>
-      </router-link>
+      <div v-show="isLogin != null && isLogin != ''">
+        <!-- <div id="person"></div> -->
+        <el-dropdown id="person-btn">
+          <span class="el-dropdown-link">
+            {{this.showName}}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <router-link to="/personalCenter">个人中心</router-link>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <div @click="logout()">退出登录</div>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+
+      </div>
+
     </div>
 
   </div>
@@ -21,10 +40,25 @@
 <script>
   export default {
     name: 'navBar',
-
     data() {
       return {
-
+      }
+    },
+    computed: {
+      isLogin() {
+        return this.$store.state.user;
+      },
+      showName() {
+        return this.$store.state.user ? this.$store.state.user.name : '';
+      },
+      getAuthority() {
+        return this.$store.state.user ? this.$store.state.user.Authority : '';
+      }
+    },
+    methods: {
+      logout() {  // 退出登录
+        this.$store.commit('logout');
+        this.$router.push('/initHome');
       }
     },
     components: {
@@ -45,15 +79,19 @@
 }
 
 #to-home {
-  line-height: 50px;
+  line-height: 60px;
 }
 
 /* --------------- 登录注册头像 ---------------- */
 .person-box {
   position: absolute;
   display: flex;
+  height: 50px;
   top: 5px;
   right: 80px;
+  background: #fff;
+  border-radius: 0 25px 0 25px;
+  border: 1px solid#e6e6e6;
 }
 
 #person {
@@ -71,4 +109,14 @@
   /* color: #35495e; */
   /* color: #134482; */
 }
+
+/* ------------------- 下拉框 ---------------------- */
+.el-dropdown-link {
+  color: #000;
+  cursor: pointer;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+
 </style>
