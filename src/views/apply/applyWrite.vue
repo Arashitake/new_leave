@@ -2,7 +2,6 @@
   <div class="apply-write-box">
     <div class="apply-title">请假申请</div>
     <from-picker></from-picker>
-    <!-- <datetime-picker></datetime-picker> -->
   </div>
 </template>
 

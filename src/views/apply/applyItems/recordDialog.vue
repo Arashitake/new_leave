@@ -8,11 +8,16 @@
       center>
       <!-- 请假内容 -->
       <ul class="record-detail">
-        <li>开始时间：</li>
-        <li>结束时间：</li>
-        <li>请假时长：</li>
-        <li>请假原因：</li>
-        <li>审批状态：</li>
+        <li>姓名：{{this.$store.state.user.name}}</li>
+        <li>学号：{{msg.stuAccount}}</li>
+        <li>请假类型：{{this.tipType(msg.typeId)}}</li>
+        <li>开始时间：{{new Date(msg.tipStart)}}</li>
+        <li>结束时间：{{new Date(msg.tipEnd)}}</li>
+        <li>请假原因：{{msg.tipReason}}</li>
+        <li></li>
+        <li></li>
+        <li>审核状态：{{msg.tipVeridied}}</li>
+        <li>审批状态：{{msg.tipApprove}}</li>
       </ul>
       <div></div>
       <span slot="footer" class="dialog-footer">
@@ -25,10 +30,29 @@
 <script>
   export default {
     name: 'recordDialog',
+    props: {
+      msg: {
+        type: Object
+      }
+    },
     data() {
       return {
         centerDialogVisible: false
       }
+    },
+    methods: {
+      // 假条类型切换
+      tipType(typeId) {
+        let typeStr = '';
+        if(typeId == 1) {
+          typeStr = '事假';
+        } else if (typeId == 2) {
+          typeStr = '病假';
+        } else if (typeId == 3) {
+          typeStr = '工假';
+        }
+        return typeStr;
+      },
     },
     components: {
 

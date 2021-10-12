@@ -13,7 +13,7 @@
             <b>学号</b>: {{dialogInfo.stuAccount}}
           </el-col>
           <el-col :span="11">
-            <b>请假类型</b>: {{dialogInfo.typeId}}
+            <b>请假类型</b>: {{this.tipType(dialogInfo.typeId)}}
           </el-col>
         </el-form-item>
         <el-form-item>
@@ -38,17 +38,25 @@
         <el-form-item>
           <b>审批时间</b>: {{dialogInfo.tipApplytime}}
         </el-form-item>
-        <!-- 选取 -->
-        <el-form-item>
+        <!-- 辅导员审批 -->
+        <el-form-item v-show="this.getAuthority >= 2">
           <b>审批状态</b>:
           <el-select v-model="approveForm.tipApprove" placeholder="请选择">
             <el-option label="通过" value="1"></el-option>
             <el-option label="不通过" value="-1"></el-option>
           </el-select>
         </el-form-item>
+        <!-- 副班审查 -->
+        <el-form-item v-show="this.getAuthority >= 1 && this.getAuthority != 2">
+          <b>审查状态</b>:
+          <el-select v-model="approveForm.tipVeridied" placeholder="请选择">
+            <el-option label="通过" value="1"></el-option>
+            <el-option label="不通过" value="-1"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="veridiedTip()">修改</el-button>
+        <el-button type="primary" @click="modifyStatus()">修改</el-button>
         <el-button @click="cancelDialog">取消</el-button>
       </span>
     </el-dialog>
@@ -70,8 +78,14 @@
     data() {
       return {
         approveForm: {
-          tipApprove: ''
+          tipApprove: '',
+          tipVeridied: ''
         }
+      }
+    },
+    computed: {
+      getAuthority() {
+        return this.$store.state.user ? this.$store.state.user.Authority : '';
       }
     },
     watch: {
@@ -81,30 +95,64 @@
       //     console.log("新值", newVal);
       //   }
       // }
-
-
     },
     methods: {
+      // 假条类型切换
+      tipType(typeId) {
+        let typeStr = '';
+        if(typeId == 1) {
+          typeStr = '事假';
+        } else if (typeId == 2) {
+          typeStr = '病假';
+        } else if (typeId == 3) {
+          typeStr = '工假';
+        }
+        return typeStr;
+      },
       // 修改父组件传过来的值
       cancelDialog() {
         this.$emit('update:dialogVisible', false);
       },
-      // 修改数据
+      modifyStatus() {
+        let authority = this.$store.state.user.Authority;    // 权限等级
+        if(authority == 1) {
+          this.veridiedTip();
+        } else if (authority == 2) {
+          this.applyTip();
+        }
+        // 完成后关闭界面
+        this.cancelDialog();
+      },
+      // 副班审核
       veridiedTip() {
         this.axios({
           method: 'post',
           url: 'api/tip/veridiedTip',
           data: {
             tipId: this.dialogInfo.tipId,
-            tipApprove: this.approveForm.tipApprove
+            tipVeridied: this.approveForm.tipVeridied
           },
         }).then(res => {
           console.log(res);
         }).catch(error => {
           console.log(error);
         })
-        // 完成后关闭界面
-        this.cancelDialog()
+      },
+      // 辅导员审批
+      applyTip() {
+        this.axios({
+          method: 'post',
+          url: 'api/tip/applyTip',
+          data: {
+            tipId: this.dialogInfo.tipId,
+            tipApprove: this.approveForm.tipApprove,
+            tipApplytime: new Date()
+          },
+        }).then(res => {
+          console.log(res);
+        }).catch(error => {
+          console.log(error);
+        })
       }
     },
     components: {
@@ -134,6 +182,7 @@ b {
   border-radius: 5px;
   box-shadow: 4px 4px 5px rgba(53, 74, 94, 0.15);
   transition: ease-in-out all .2s;
+  border: 1px solid #418771;
   cursor: pointer;
 }
 
@@ -148,4 +197,7 @@ b {
   box-shadow: 4px 4px 10px rgba(53, 74, 94, 0.25);
 }
 
+.approve-dialog-box .el-button:nth-child(2):hover {
+  color: #418771;
+}
 </style>

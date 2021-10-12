@@ -1,8 +1,8 @@
 <template>
   <div id="navBar">
     <div id="to-home">
-      <router-link to="/Home">Home</router-link>
-      <router-link to="/managePage" v-show="this.getAuthority == 3">管理页</router-link>
+      <router-link to="/Home" id="toHomeBtn">Home</router-link>
+      <router-link to="/managePage" id="toManageBtn" v-show="this.getAuthority == 3">管理页</router-link>
     </div>
 
     <!-- <div id="to-apply"></div> -->
@@ -119,4 +119,26 @@
   font-size: 12px;
 }
 
+/* -------------- 跳转到主页 ------------------ */
+#toHomeBtn {
+  margin-left: 20px;
+  padding: 12px 15px;
+  color: #fff;
+  font-style:oblique;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px #34485d;
+}
+
+/* ------------ 管理页面 --------------- */
+#toManageBtn {
+  padding: 12px 15px;
+  color: #fff;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px #34485d;
+}
 </style>

@@ -1,16 +1,25 @@
 <template>
   <div class="record-item-box">
-    <div class="leave-id-box">请假条编号：{{msg.title}}</div>
+    <div class="leave-id-box">Leave application</div>
      <el-divider content-position="right"><i class="el-icon-star-on"></i></el-divider>
     <ul class="leave-content">
-      <li>姓&nbsp;&nbsp;&nbsp;名：</li>
-      <li>学&nbsp;&nbsp;&nbsp;号：</li>
-      <li>开始时间：</li>
-      <li>结束时间：</li>
-      <li>请假时长：</li>
-      <li>审批状态：</li>
+      <li>
+        <span>姓&nbsp;&nbsp;&nbsp;名：</span>{{this.$store.state.user.name}}
+      </li>
+      <li>
+        <span>学&nbsp;&nbsp;&nbsp;号：</span>{{msg.stuAccount}}
+      </li>
+      <li>
+        <span>开始时间：</span>{{new Date(msg.tipStart)}}
+      </li>
+      <li>
+        <span>结束时间：</span>{{new Date(msg.tipEnd)}}
+      </li>
+      <li>
+        <span>审批状态：</span>{{msg.tipApprove}}
+      </li>
     </ul>
-    <record-dialog/>
+    <record-dialog :msg="msg"/>
 
   </div>
 </template>
@@ -21,10 +30,8 @@
   export default {
     name: 'recordItem',
     props: {
-      // dataList: ['dataList'],
       msg: {
-        type: Object,
-        default: '未初始化'
+        type: Object
       }
     },
     data() {
@@ -59,6 +66,8 @@
   padding: 0 20px;
   height: 50px;
   line-height: 50px;
+  letter-spacing: 1px;
+  font-style: italic;
   font-size: 18px;
   font-weight: bold;
 }
@@ -87,6 +96,9 @@ ul > li {
   line-height: 25px;
 }
 
-
+ul > li > span {
+  color: #418771;
+  font-weight: bold;
+}
 
 </style>

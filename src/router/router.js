@@ -8,6 +8,8 @@ import personalCenter from '../views/person/personCenter.vue'
 import managePage from '../views/admin/managePage.vue'
 import store from '../store'
 import approveTip from '../views/judgeMessage/approveTip.vue'
+import veridiedTip from '../views/judgeMessage/veridiedTip.vue'
+import classSelectTip from '../views/judgeMessage/classSelectTip.vue'
 
 const routes = [
   {
@@ -66,6 +68,16 @@ const routes = [
     path: '/approveTip',
     name: 'approveTip',
     component: approveTip
+  },
+  { // veridiedTip 审核假条页面
+    path: '/veridiedTip',
+    name: 'veridiedTip',
+    component: veridiedTip
+  },  // classSelectTip 审核仅查看页面
+  {
+    path: '/classSelectTip',
+    name: 'classSelectTip',
+    component: classSelectTip
   }
 ]
 

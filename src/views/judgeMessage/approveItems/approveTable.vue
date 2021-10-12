@@ -3,10 +3,24 @@
     <el-table :data="this.getBroData" style="width: 100%" height="368">
       <el-table-column fixed prop="tipId" label="Id" width="40" />
       <el-table-column fixed prop="stuAccount" label="学号" width="100" />
-      <el-table-column prop="typeId" label="请假类型" width="120" />
-      <el-table-column prop="tipReason" label="请假原因" width="250" />
-      <el-table-column prop="tipStart" label="开始时间" width="150" />
-      <el-table-column prop="tipEnd" label="结束时间" width="150" />
+      <el-table-column label="请假类型" width="120">
+        <template slot-scope="scope">
+          <span v-if='scope.row.typeId == 1'>事假</span>
+          <span v-if='scope.row.typeId == 2'>病假</span>
+          <span v-if='scope.row.typeId == 3'>工假</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="tipReason" label="请假原因" width="200" />
+      <el-table-column label="开始时间" width="175">
+        <template slot-scope="scope">
+          {{dateFtt("yyyy-MM-dd hh:mm:ss", new Date(scope.row.tipStart))}}
+        </template>
+      </el-table-column>
+      <el-table-column label="结束时间" width="175">
+        <template slot-scope="scope">
+          {{dateFtt("yyyy-MM-dd hh:mm:ss", new Date(scope.row.tipEnd))}}
+        </template>
+      </el-table-column>
       <el-table-column prop="tipVeridied" label="是否审核" width="100" />
       <el-table-column prop="tipApprove" label="是否审批" width="100" />
       <el-table-column prop="tipApplytime" label="审批时间" width="200" />
@@ -56,6 +70,23 @@
         }
         return typeStr;
       },
+      dateFtt(fmt, date) {
+        let o = {
+          "M+": date.getMonth() + 1,
+          "d+": date.getDate(),
+          "h+": date.getHours(),
+          "m+": date.getMinutes(),
+          "s+": date.getSeconds(),
+          "q+": Math.floor((date.getMonth() + 3) / 3),
+          "S": date.getMilliseconds()
+        };
+        if(/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+		  },
       //点击查看 按钮  的事件
       handleClick(info) {
         this.dialogVisible = true;

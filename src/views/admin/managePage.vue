@@ -4,8 +4,8 @@
       <el-tab-pane label="用户管理">
         <users-manage/>
       </el-tab-pane>
-      <el-tab-pane label="设置审核">
-
+      <el-tab-pane label="设置身份">
+        <set-audit/>
       </el-tab-pane>
       <el-tab-pane label="Role">Role</el-tab-pane>
       <el-tab-pane label="Task">Task</el-tab-pane>
@@ -15,6 +15,7 @@
 
 <script>
   import usersManage from './adminItems/usersManage.vue'
+  import setAudit from './adminItems/setAudit.vue'
 
   export default {
     name: 'managePage',
@@ -24,7 +25,8 @@
       }
     },
     components: {
-      usersManage
+      usersManage,
+      setAudit
     }
   }
 </script>

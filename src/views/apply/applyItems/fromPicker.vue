@@ -52,7 +52,7 @@
         <el-radio-group v-model="form.resource">
           <el-radio label="病假"></el-radio>
           <el-radio label="事假"></el-radio>
-          <el-radio label="公假"></el-radio>
+          <el-radio label="工假"></el-radio>
         </el-radio-group>
       </el-form-item>
 
@@ -125,6 +125,7 @@
     },
     // 发送请假申请
     postLeaveTip() {
+      let that = this;
       this.axios({
         method: 'post',
         url: 'api/tip/askLeave',
@@ -140,6 +141,7 @@
         }
       }).then(res => {
         console.log(res);
+        that.$router.push('/Home');
       }).catch(error => {
         console.log(error);
       })

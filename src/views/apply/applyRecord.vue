@@ -3,16 +3,16 @@
     <!-- 筛选栏 -->
     <div class="side-nav-bar">
       <ul>
-        <li @click="change(index)" :class='currentIndex==index?"tab-selected":""' :key='item.id' v-for='(item, index) in list'>
+        <li @click="change(index)" :class='currentIndex==index?"tab-selected":""' :key='item.id' v-for='(item, index) in tipsList'>
           {{item.tag}}
         </li>
       </ul>
     </div>
     <!-- 显示请假 -->
     <div id="records-box">
-      <div :class='currentIndex==index?"current":""' :key='item.id' v-for='(item, index) in list'>
+      <div :class='currentIndex==index?"current":""' :key='item.id' v-for='(item, index) in tipsList'>
         <!-- <record-item :dataList='dataList'></record-item> -->
-        <record-item v-for="(i, j) in item.abbData" :msg="i"></record-item>
+        <record-item v-for="(d, i) in item.ApproveList" :msg="d"></record-item>
       </div>
     </div>
   </div>
@@ -27,27 +27,22 @@
       return {
         dataList: [],
         currentIndex: 0,
-        list: [{
+        tipsList: [{
           id: 1,
           tag: '未审批',
-          abbData: [{
-            title: '001'
-          },{
-            title: '002'
-          }]
-        },{
+          ApproveList: []
+        },
+        {
           id: 2,
-          tag: '已审批',
-          abbData: [{
-            title: '222'
-          },{
-            title: '333'
-          }]
+          tag: '申请记录',
+          ApproveList: []
         }]
       }
     },
     mounted() {
       // this.applyMes();
+      this.selectTipByAccount();
+      this.queryHistoryTip();
     },
     methods: {
       applyMes() {
@@ -73,6 +68,37 @@
       },
       change: function(index) {
         this.currentIndex = index;
+      },
+      // 获取某个学生的未审批信息
+      selectTipByAccount(){
+        let that = this;
+        this.axios({
+          method: 'post',
+          url: 'api/tip/selectTipByAccount',
+          data: {
+            stuAccount: this.$store.state.user.account
+          },
+        }).then(res => {
+          that.tipsList[0].ApproveList = res.data.date;
+          console.log(res);
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      // 获取申请记录
+      queryHistoryTip() {
+        let that = this;
+        this.axios({
+          method: 'post',
+          url: 'api/tip/queryHistoryTip',
+          data: {
+            stuAccount: this.$store.state.user.account
+          }
+        }).then(res => {
+          that.tipsList[1].ApproveList = res.data.date;
+        }).catch(error => {
+          console.log(error);
+        })
       }
     },
     components: {

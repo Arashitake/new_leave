@@ -8,13 +8,10 @@
       <div class="jump-router" v-show="this.getAuthority <= 1">请假申请</div>
     </router-link>
   <!-- 副班 -->
-    <router-link to="/applyWrite">
+    <router-link to="/veridiedTip">
       <div class="jump-router" v-show="this.getAuthority == 1">请假审核</div>
     </router-link>
   <!-- 辅导员&管理员 -->
-    <router-link to="/myComponent">
-      <div class="jump-router" v-show="this.getAuthority >= 2">测试用的</div>
-    </router-link>
     <router-link to="/approveTip">
       <div class="jump-router" v-show="this.getAuthority >= 2">请假审批</div>
     </router-link>

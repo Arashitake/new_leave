@@ -1,10 +1,16 @@
-function slowToTop()
-{
-  let time = setInterval(function(){
+export default {
+  slowToTop,
+  slowToTarget,
+  takeIndex,
+  dateFtt
+}
+
+function slowToTop(){
+  let timer = setInterval(function(){
     let fromTop = document.body.scrollTop || document.documentElement.scrollTop;  // 当前位置
     let speed = Math.floor(-fromTop/5);   // 滑动速度
     if(fromTop == 0){   // 滑动顶部
-      clearInterval(time);
+      clearInterval(timer);
       return;
     }
     fromTop = document.body.scrollTop = document.documentElement.scrollTop = fromTop + speed;
@@ -47,10 +53,23 @@ function takeIndex(click, len) {
   return num;
 }
 
-export default {
-  slowToTop,
-  slowToTarget,
-  takeIndex
+function dateFtt(fmt, date) {
+  let o = {
+    "M+": date.getMonth() + 1,
+    "d+": date.getDate(),
+    "h+": date.getHours(),
+    "m+": date.getMinutes(),
+    "s+": date.getSeconds(),
+    "q+": Math.floor((date.getMonth() + 3) / 3),
+    "S": date.getMilliseconds()
+  };
+  if(/(y+)/.test(fmt))
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for(var k in o)
+    if(new RegExp("(" + k + ")").test(fmt))
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
 }
+
 
 

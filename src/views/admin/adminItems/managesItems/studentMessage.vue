@@ -1,6 +1,6 @@
 <template>
   <div id="student-manage-box">
-    <el-table :data="dataList" style="width: 100%">
+    <el-table :data="dataList" height="250" style="width: 100%">
       <el-table-column prop="stuId" label="Id" width="50"/>
       <el-table-column prop="stuAccount" label="Account" width="120" />
       <el-table-column prop="stuName" label="Name" width="100" />
@@ -45,4 +45,5 @@
 #student-manage-box {
   padding: 0 10px;
 }
+
 </style>

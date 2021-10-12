@@ -147,7 +147,7 @@
             account: res.data.student.stuAccount,
             password: res.data.student.stuPwd,
             name: res.data.student.stuName,
-            Authority: 0
+            Authority: (res.data.student.stuType == "普通学生"? 0 : 1)
           }
 
           // 将用户token保存到vuex
