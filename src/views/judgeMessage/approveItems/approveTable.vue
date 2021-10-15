@@ -5,25 +5,35 @@
       <el-table-column fixed prop="stuAccount" label="学号" width="100" />
       <el-table-column label="请假类型" width="120">
         <template slot-scope="scope">
-          <span v-if='scope.row.typeId == 1'>事假</span>
-          <span v-if='scope.row.typeId == 2'>病假</span>
-          <span v-if='scope.row.typeId == 3'>工假</span>
+          {{scope.row.typeId == 2 ? '病假' : (scope.row.typeId == 1 ? '事假' : '工假')}}
         </template>
       </el-table-column>
       <el-table-column prop="tipReason" label="请假原因" width="200" />
-      <el-table-column label="开始时间" width="175">
+      <el-table-column label="开始时间" width="185">
         <template slot-scope="scope">
-          {{dateFtt("yyyy-MM-dd hh:mm:ss", new Date(scope.row.tipStart))}}
+          {{new Date(scope.row.tipStart - 28800000).toLocaleString()}}
         </template>
       </el-table-column>
-      <el-table-column label="结束时间" width="175">
+      <el-table-column label="结束时间" width="185">
         <template slot-scope="scope">
-          {{dateFtt("yyyy-MM-dd hh:mm:ss", new Date(scope.row.tipEnd))}}
+          {{new Date(scope.row.tipEnd - 28800000).toLocaleString()}}
         </template>
       </el-table-column>
-      <el-table-column prop="tipVeridied" label="是否审核" width="100" />
-      <el-table-column prop="tipApprove" label="是否审批" width="100" />
-      <el-table-column prop="tipApplytime" label="审批时间" width="200" />
+      <el-table-column label="是否审核" width="120" >
+        <template slot-scope="scope">
+          {{scope.row.tipVeridied == 0 ? "未审核" : (scope.row.tipVeridied == 1 ? "审核通过" : "审核不通过")}}
+        </template>
+      </el-table-column>
+       <el-table-column label="是否审批" width="120" >
+        <template slot-scope="scope">
+          {{scope.row.tipApprove == 0 ? "未审批" : (scope.row.tipApprove == 1 ? "审批通过" : "审批不通过")}}
+        </template>
+      </el-table-column>
+      <el-table-column label="审批时间" width="185">
+        <template slot-scope="scope">
+          {{scope.row.tipApplytime == null ? "-" : new Date(scope.row.tipApplytime - 28800000).toLocaleString()}}
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="审批" width="100">
         <template slot-scope="scope">
           <!-- scope.row：将该行数据传递进去 -->

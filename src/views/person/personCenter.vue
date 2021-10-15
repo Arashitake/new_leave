@@ -6,10 +6,10 @@
         @tab-click="handleClick"
         style="height: 320px;">
         <el-tab-pane label="个人信息">
-          <person-info :personInfo="personInfo"/>
-        </el-tab-pane>
-        <el-tab-pane label="修改信息">
           <modify-info :personInfo="personInfo"/>
+        </el-tab-pane>
+        <el-tab-pane label="修改密码">
+          <modify-password/>
         </el-tab-pane>
         <el-tab-pane label="Config">
 
@@ -25,19 +25,20 @@
 <script>
   import personInfo from './infoItems/personInfo.vue';
   import modifyInfo from './infoItems/modifyInfo.vue';
+  import modifyPassword from './infoItems/modifyPassword.vue';
 
   export default {
     name: 'personalCenter',
     data() {
       return {
-        personInfo: []
+        personInfo: [],
       }
     },
     computed: {
       // return
     },
     mounted() {
-      this.getPersonMessage()
+      this.getPersonMessage();
     },
     methods: {
       // 获取个人信息
@@ -51,6 +52,7 @@
             stuPwd: this.$store.state.user.password
           }
         }).then(res => {
+          // console.log(res);
           that.personInfo = res.data.student;
         }).catch(error => {
           console.log(error);
@@ -62,7 +64,8 @@
     },
     components: {
       personInfo,
-      modifyInfo
+      modifyInfo,
+      modifyPassword
     }
   }
 </script>

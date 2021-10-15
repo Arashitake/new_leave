@@ -10,13 +10,16 @@
         <span>学&nbsp;&nbsp;&nbsp;号：</span>{{msg.stuAccount}}
       </li>
       <li>
-        <span>开始时间：</span>{{new Date(msg.tipStart)}}
+        <span>开始时间：</span>{{new Date(msg.tipStart).toLocaleString()}}
       </li>
       <li>
-        <span>结束时间：</span>{{new Date(msg.tipEnd)}}
+        <span>结束时间：</span>{{new Date(msg.tipEnd).toLocaleString()}}
       </li>
       <li>
-        <span>审批状态：</span>{{msg.tipApprove}}
+        <span>审核状态：</span>{{msg.tipVeridied == 0 ? "未审核" : (msg.tipVeridied == 1 ? "审核通过" : "审核不通过")}}
+      </li>
+      <li>
+        <span>审批状态：</span>{{msg.tipApprove == 0 ? "未审批" : (msg.tipApprove == 1 ? "审批通过" : "审批不通过")}}
       </li>
     </ul>
     <record-dialog :msg="msg"/>
@@ -88,7 +91,7 @@
 /* leave-content：请假内容 */
 ul {
   list-style-type: none;
-  margin: 15px 40px;
+  margin: 15px 40px 0;
   letter-spacing: 2px;
 }
 

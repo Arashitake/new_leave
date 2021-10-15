@@ -1,7 +1,7 @@
 <template>
   <div id="veridied-tip-box">
-    <veridied-nav></veridied-nav>
-    <veridied-table></veridied-table>
+    <veridied-nav @classTip-data-list='getClassData' ref='child'></veridied-nav>
+    <veridied-table :dataList="dataList"></veridied-table>
   </div>
 </template>
 
@@ -13,7 +13,18 @@
     name: 'veridiedTip',
     data() {
       return {
-
+        dataList: []
+      }
+    },
+    mounted() {
+      this.getChildMsg();
+    },
+    methods: {
+      getClassData(dataList) {
+        this.dataList = dataList;
+      },
+      getChildMsg() {
+        this.$refs.child.selectUnVeridiedTipByClass();
       }
     },
     components: {

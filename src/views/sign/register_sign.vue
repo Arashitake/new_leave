@@ -11,13 +11,13 @@
         <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="0px" class="ms-content">
           <el-form-item prop="loginName">
             <el-input v-model="loginForm.loginName" placeholder="用户名">
-              <el-button slot="prepend" icon="icon-d-wo1"></el-button>
+              <el-button slot="prepend" icon="icon-d-wo"></el-button>
             </el-input>
           </el-form-item>
 
           <el-form-item prop="password">
             <el-input type="password" v-model="loginForm.password" placeholder="密码">
-              <el-button slot="prepend" icon="icon-d-yuechi1"></el-button>
+              <el-button slot="prepend" icon="icon-d-yuechi"></el-button>
             </el-input>
           </el-form-item>
 

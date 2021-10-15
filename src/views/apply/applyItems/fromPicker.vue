@@ -133,8 +133,8 @@
           stuAccount: this.$store.state.user.account,
           typeId: this.judgeresource(this.form.resource),
           tipReason: this.form.desc,
-          tipStart: new Date(this.form.date1+' '+this.form.region1),
-          tipEnd: new Date(this.form.date2+' '+this.form.region2),
+          tipStart: new Date(this.form.date1+' '+this.form.region1).toLocaleString(),
+          tipEnd: new Date(this.form.date2+' '+this.form.region2).toLocaleString(),
         },
         headers: {
           'Content-Type': 'application/json'

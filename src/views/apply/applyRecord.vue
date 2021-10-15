@@ -11,7 +11,6 @@
     <!-- 显示请假 -->
     <div id="records-box">
       <div :class='currentIndex==index?"current":""' :key='item.id' v-for='(item, index) in tipsList'>
-        <!-- <record-item :dataList='dataList'></record-item> -->
         <record-item v-for="(d, i) in item.ApproveList" :msg="d"></record-item>
       </div>
     </div>
@@ -40,32 +39,10 @@
       }
     },
     mounted() {
-      // this.applyMes();
       this.selectTipByAccount();
       this.queryHistoryTip();
     },
     methods: {
-      applyMes() {
-        let that = this;
-        this.axios({
-          method: get,
-          url: 'api/tip/queryHistoryTip'
-        }).then(res => {
-          let historyList = res.data.data;
-        })
-
-        // let that = this;    // 保存当前this
-        // this.axios.get("https://service-dxtrccme-1302998929.gz.apigw.tencentcs.com/release/accordin")
-        // this.axios.get("api/tip/queryHistoryTip")
-        // this.axios.get("api/public/getArticles?page=0")
-        // .then(res => {
-        //   console.log(111);
-        //   console.log(res);
-          // let data = res.data.data[0];
-          // that.dataList = data;
-          // console.log(typeof(this.dataList));
-        // })
-      },
       change: function(index) {
         this.currentIndex = index;
       },
@@ -85,7 +62,7 @@
           console.log(error);
         })
       },
-      // 获取申请记录
+      // 获取班级历史请假申请记录
       queryHistoryTip() {
         let that = this;
         this.axios({
@@ -95,7 +72,7 @@
             stuAccount: this.$store.state.user.account
           }
         }).then(res => {
-          that.tipsList[1].ApproveList = res.data.date;
+          that.tipsList[1].ApproveList = res.data.date.reverse();
         }).catch(error => {
           console.log(error);
         })

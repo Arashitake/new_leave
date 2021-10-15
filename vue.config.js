@@ -21,12 +21,14 @@ module.exports = {
     port: 1234,    //端口号
     disableHostCheck: true,   //是否可以被其他设备访问
     proxy: {
-      'api/': {
-        target: 'http://localhost:8080',       // 访问数据的服务器的地址
+      'api/': { // 请求地址固定以 /api 开头的执行以下代理内容
+        target: 'http://localhost:8080',       // 访问数据的服务器的地址（后台的接口域名）
+        // ws: true,    // 需要代理websockets，配置这个参数，不需要的去掉
+        // secure: false,  // 接口协议是https的，配置这个参数，不是的去掉
         // target: 'http://192.168.43.205:8888',
-        changeOrigin: true,     // 是否允许其他设备访问，禁用主机检查
+        changeOrigin: true,     // 是否允许其他设备访问，禁用主机检查（是否跨域）
         pathRewrite: {
-          '^/api':''   // 替换掉api
+          ['^/api']: ''   // 这里重写地址，把/api替换为空，则实际访问地址中没有/api，必要这一步
         }
       }
     }

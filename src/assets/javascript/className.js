@@ -3,7 +3,8 @@ export default {
   addClass,
   removeClass,
   toggleClass,
-  replaceClass
+  replaceClass,
+  siblings
 }
 
 // 判断样式是否存在
@@ -44,4 +45,25 @@ function replaceClass(elm, clsn) {
     elm.className = " ".replace(/(^\s*)|(\s*$)/g, "");
     addClass(elm, clsn);
   }
+}
+
+// 获取兄弟节点：elm为想要获取兄弟节点的某节点
+function siblings(elm) {
+  let elmArr = [];  // 存储兄弟元素
+  let p = elm.previousSibling;  // 取兄节点
+  while(p) {  // 先取o的兄节点，判断有没有上一个兄元素，如果有就向下执行
+    if(p.nodeType === 1) {
+      elmArr.push(p);
+    }
+    p = p.perviousSibling;  // 最后把上一个节点赋给p
+  }
+  elmArr.reverse(); // 逆序，变成按顺序
+  let n = elm.nextSibling;  // 取弟节点
+  while (n) {
+    if(n.nodeType === 1) {
+      elmArr.push(n);
+    }
+    n = n.nextSibling;
+  }
+  return elmArr;
 }
