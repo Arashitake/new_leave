@@ -56,7 +56,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="modifyStatus()" v-show="this.isShowModifyBtn">修改</el-button>
+        <el-button type="primary" @click="modifyStatus()" v-show="this.isShowModifyBtn()">修改</el-button>
         <el-button @click="cancelDialog">取消</el-button>
       </span>
     </el-dialog>
@@ -93,17 +93,19 @@
       // 是否显示修改按钮
       isShowModifyBtn() {
         if(this.getAuthority == 1) {  // 请假管理员：已审核（通过/不通过）
-          if(this.approveForm.tipVeridied == 1 || this.approveForm.tipVeridied == -1) {
-            return false;
-          } else {
-            return true;
-          }
+          return true;
+          // if(this.approveForm.tipVeridied == 1 || this.approveForm.tipVeridied == -1) {
+          //   return false;
+          // } else {
+          //   return true;
+          // }
         } else if(this.getAuthority >= 1) { // 辅导员：已审批（通过/不通过）
-          if(this.approveForm.tipApprove == 1 || this.approveForm.tipApprove == -1) {
-            return false;
-          } else {
-            return true;
-          }
+          // if(this.approveForm.tipApprove == 1 || this.approveForm.tipApprove == -1) {
+          //   return false;
+          // } else {
+          //   return true;
+          // }
+          return true;
         }
       },
       // 假条类型切换

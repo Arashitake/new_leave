@@ -11,7 +11,7 @@
       <el-form-item label="设置管理员（input account）：">
         <el-input v-model="input" type="text" style="margin-left: 10px"></el-input>
       </el-form-item>
-      <el-button type="primary" @click="changeStudentType()">设置 ADMIN</el-button>
+      <el-button type="primary" @click="">设置 ADMIN</el-button>
     </el-form>
   </div>
 </template>
@@ -28,6 +28,7 @@
       this.changeStudentType()
     },
     methods: {
+      // 设置学生类型为请假管理员
       changeStudentType() {
         let that = this;
         this.axios({
@@ -37,7 +38,7 @@
             stuId: this.input
           },
         }).then(res => {
-          console.log(res);
+          // console.log(res);
         }).catch(error => {
           console.log(error);
         })

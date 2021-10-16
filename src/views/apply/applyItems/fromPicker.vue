@@ -43,8 +43,10 @@
         </div>
       </el-form-item>
 
-      <el-form-item label="涉及天数">
-        <!-- {{getStartTime()}} - {{getStartTime()}} -->
+      <el-form-item label="涉及天数" v-model="form">
+        <span id="time-difference">
+          {{(form.date2 != "" && form.date1 != "") ? Math.ceil((new Date(form.date2).getTime() - new Date(form.date1).getTime())/(24*3600*1000))+1 : 0}} 天
+        </span>
       </el-form-item>
 
       <!-- 单选框 -->
@@ -133,14 +135,13 @@
           stuAccount: this.$store.state.user.account,
           typeId: this.judgeresource(this.form.resource),
           tipReason: this.form.desc,
-          tipStart: new Date(this.form.date1+' '+this.form.region1).toLocaleString(),
-          tipEnd: new Date(this.form.date2+' '+this.form.region2).toLocaleString(),
+          tipStart: new Date(this.form.date1+' '+this.form.region1),
+          tipEnd: new Date(this.form.date2+' '+this.form.region2),
         },
         headers: {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        console.log(res);
         that.$router.push('/Home');
       }).catch(error => {
         console.log(error);
@@ -170,6 +171,12 @@
 
 .el-form-item {
   font-weight: bold;
+}
+
+/* 涉及天数 */
+#time-difference {
+  font-size: 13px;
+  color: #488c76;
 }
 
 .el-form-item .el-radio:nth-child(1) {

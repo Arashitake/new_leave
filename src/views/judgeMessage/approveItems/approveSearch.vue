@@ -69,7 +69,6 @@
             stuAccount: this.input
           },
         }).then(res => {
-          console.log("按班级：", res);
           that.$emit('tip-data-list', res.data.date);
         }).catch(error => {
           console.log(error);

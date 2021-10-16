@@ -21,7 +21,8 @@
         <li>审批时间：{{msg.tipApplytime == null ? "-" : new Date(msg.tipApplytime - 28800000).toLocaleString()}}</li>
       </ul>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" v-show="msg.tipVeridied == -1" @click="appealTip()">申诉</el-button>
+        <el-button type="primary" v-show="msg.tipVeridied == -1" @click="appealTip()">申 诉</el-button>
+        <el-button id="recall-btn" v-show="msg.tipVeridied == 0 && msg.tipApprove == 0" type="warning" @click="recallTip()">撤 回</el-button>
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </div>
     </el-dialog>
@@ -60,6 +61,21 @@
         this.axios({
           method: 'post',
           url: 'api/tip/appeal',
+          data: {
+            tipId: this.msg.tipId
+          }
+        }).then(res => {
+          this.reload();    // 刷新页面
+          this.centerDialogVisible = false; // 申诉后退出窗口
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      // 学生撤回请假信息
+      recallTip() {
+        this.axios({
+          method: 'post',
+          url: 'api/tip/recallTip',
           data: {
             tipId: this.msg.tipId
           }
@@ -111,5 +127,14 @@
 #record-dialog-box > .el-button:focus {
   color: #418771;
   font-weight: bold;
+}
+
+/* ---------------- 撤回请假信息 -------------------- */
+#recall-btn {
+  background: #dd5044;
+  }
+
+#recall-btn:hover {
+  background: #f54a3b;
 }
 </style>

@@ -11,12 +11,6 @@
         <el-tab-pane label="修改密码">
           <modify-password/>
         </el-tab-pane>
-        <el-tab-pane label="Config">
-
-        </el-tab-pane>
-        <el-tab-pane label="Role">
-
-        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -38,11 +32,16 @@
       // return
     },
     mounted() {
-      this.getPersonMessage();
+      let authority = this.$store.state.user.Authority;
+      if(authority < 2) {
+        this.getStuPersonMessage();
+      } else if (authority == 2) {
+        this.getTeaPersonMessage();
+      }
     },
     methods: {
-      // 获取个人信息
-      getPersonMessage() {
+      // 获取学生个人信息
+      getStuPersonMessage() {
         let that = this;
         this.axios({
           method: 'post',
@@ -54,6 +53,23 @@
         }).then(res => {
           // console.log(res);
           that.personInfo = res.data.student;
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      // 获取教师个人信息
+      getTeaPersonMessage() {
+        let that = this;
+        this.axios({
+          method: 'post',
+          url: 'api/teacher/login',
+          data: {
+            teaAccount: this.$store.state.user.account,
+            teaPwd: this.$store.state.user.password
+          }
+        }).then(res => {
+          // console.log(res);
+          that.personInfo = res.data.teacher;
         }).catch(error => {
           console.log(error);
         })

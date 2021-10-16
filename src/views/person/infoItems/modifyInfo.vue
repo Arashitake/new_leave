@@ -1,7 +1,8 @@
 <template>
   <div id="modify-person-message">
-    <i class="el-icon-edit" @click="startEditing()"></i>
-    <div class="message-box">
+    <i class="el-icon-edit" @click="startEditing()" v-if="authority <= 2"></i>
+    <!-- 学生 -->
+    <div class="message-box" v-if="authority < 2">
       <ul>
         <li>
           <span>姓名：</span>
@@ -24,12 +25,12 @@
           <span>学院：</span>
           <b v-show="!isEdit">{{personInfo.stuCollege}}</b>
           <el-input v-show="isEdit" v-model="personInfo.stuCollege" clearable/>
-          </li>
+        </li>
         <li>
           <span>专业：</span>
           <b v-show="!isEdit">{{personInfo.stuPro}}</b>
           <el-input v-show="isEdit" v-model="personInfo.stuPro" clearable/>
-          </li>
+        </li>
         <li>
           <span>年级：</span>
           <b v-show="!isEdit">{{personInfo.stuGrade}}</b>
@@ -42,10 +43,59 @@
         </li>
       </ul>
     </div>
-    <div class="btn-box" v-show="isEdit">
-      <el-button type="primary" @click="modifyInfoMessage()">更新个人信息</el-button>
+    <!-- 辅导员 -->
+    <div class="message-box" v-if="authority == 2">
+      <ul>
+        <li>
+          <span>姓名：</span>
+          <b v-show="!isEdit">{{personInfo.teaName}}</b>
+          <el-input v-show="isEdit" v-model="personInfo.teaName" clearable disabled/>
+        </li>
+        <li>
+          <span>账号：</span>
+          <b v-show="!isEdit">{{personInfo.teaAccount}}</b>
+          <el-input v-show="isEdit" v-model="personInfo.teaAccount" clearable disabled/>
+        </li>
+        <li>
+          <span>性别：</span>
+          <b v-show="!isEdit">{{personInfo.teaSex}}</b>
+          <el-input v-show="isEdit" v-model="personInfo.teaSex" clearable/>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <span>学院：</span>
+          <b v-show="!isEdit">{{personInfo.teaCollege}}</b>
+          <el-input v-show="isEdit" v-model="personInfo.teaCollege" clearable/>
+        </li>
+        <li>
+          <span>年级：</span>
+          <b v-show="!isEdit">{{personInfo.teaMgrade}}</b>
+          <el-input v-show="isEdit" v-model="personInfo.teaMgrade" clearable/>
+        </li>
+        <li>
+          <span>身份：</span>
+          <b v-show="!isEdit">{{identity}}</b>
+          <el-input v-show="isEdit" v-model="this.identity" clearable disabled/>
+        </li>
+      </ul>
     </div>
-    <!-- <el-alert v-show="" title="修改个人信息成功" type="success" center show-icon> </el-alert> -->
+    <!-- 管理员 -->
+    <div class="message-box" v-if="authority == 3">
+      <ul>
+        <li>
+          <span>姓名：</span>
+          <b>Admin</b>
+        </li>
+        <li>
+          <span>账号：</span>
+          <b>{{personMsg.account}}</b>
+        </li>
+      </ul>
+    </div>
+    <div class="btn-box" v-if="authority <= 2" v-show="isEdit">
+      <el-button type="primary" @click="modifyInfoMsg()">更新个人信息</el-button>
+    </div>
   </div>
 </template>
 
@@ -58,7 +108,9 @@
     data() {
       return {
         personMsg: this.$store.state.user,
-        isEdit: false
+        isEdit: false,
+        authority: this.$store.state.user.Authority,
+        identity: '辅导员'
       }
     },
     methods: {
@@ -66,8 +118,17 @@
       startEditing() {
         this.isEdit = !this.isEdit;
       },
-      // 修改信息
-      modifyInfoMessage() {
+      // 修改个人信息
+      modifyInfoMsg() {
+        let authority = this.$store.state.user.Authority;
+        if(authority < 2) {
+          this.modifyStuInfoMessage();
+        } else if (authority == 2) {
+          this.modifyTeaInfoMessage();
+        }
+      },
+      // 修改学生信息
+      modifyStuInfoMessage() {
         this.axios({
           method: 'post',
           url: 'api/student/changeStudentInfoByAccount',
@@ -80,7 +141,27 @@
             stuPro: this.personInfo.stuPro
           }
         }).then(res => {
-          console.log(res);
+          // console.log(res);
+        }).catch(error => {
+          console.log(error);
+        })
+        // 编辑结束
+        this.startEditing();
+      },
+      // 修改辅导员信息
+      modifyTeaInfoMessage() {
+        this.axios({
+          method: 'post',
+          url: 'api/student/changeTeacherInfoByAccount',
+          data: {
+            teaAccount: this.personInfo.teaAccount,
+            teaName: this.personInfo.teaName,
+            teaSex: this.personInfo.teaSex,
+            teaGrade: this.personInfo.teaMgrade,
+            teaCollege: this.personInfo.teaCollege
+          }
+        }).then(res => {
+          // console.log(res);
         }).catch(error => {
           console.log(error);
         })

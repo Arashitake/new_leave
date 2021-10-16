@@ -28,25 +28,58 @@
         currentIndex: 0,
         tipsList: [{
           id: 1,
-          tag: '未审批',
+          tag: '未审核',
           ApproveList: []
         },
         {
           id: 2,
-          tag: '申请记录',
+          tag: '未审批',
+          ApproveList: []
+        },
+        {
+          id: 3,
+          tag: '已审批',
+          ApproveList: []
+        },
+        {
+          id: 4,
+          tag: '历史记录',
           ApproveList: []
         }]
       }
     },
     mounted() {
-      this.selectTipByAccount();
-      this.queryHistoryTip();
+      this.getUnVeridiedAndUnAppyTipList();
     },
     methods: {
       change: function(index) {
         this.currentIndex = index;
+        if(index == 0) {  // 未审核未审批
+          this.getUnVeridiedAndUnAppyTipList();
+        } else if (index == 1) {  // 已审核未审批
+          this.selectTipByAccount();
+        } else if (index == 2) {  // 已审核已审批
+          this.getVeridiedAndAppyTipList();
+        } else if (index == 3) {  // 获取个人请假历史记录
+          this.queryHistoryTip();
+        }
       },
-      // 获取某个学生的未审批信息
+      // 获取未审核未审批信息：可以撤回请假申请
+      getUnVeridiedAndUnAppyTipList() {
+        let that = this;
+        this.axios({
+          method: 'post',
+          url: 'api/tip/getUnVeridiedAndUnAppyTipList',
+          data: {
+            stuAccount: this.$store.state.user.account
+          }
+        }).then(res => {
+          that.tipsList[0].ApproveList = res.data.date.reverse();
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      // 获取某个学生的已审核未审批信息
       selectTipByAccount(){
         let that = this;
         this.axios({
@@ -56,13 +89,27 @@
             stuAccount: this.$store.state.user.account
           },
         }).then(res => {
-          that.tipsList[0].ApproveList = res.data.date;
-          console.log(res);
+          that.tipsList[1].ApproveList = res.data.date;
         }).catch(error => {
           console.log(error);
         })
       },
-      // 获取班级历史请假申请记录
+      // 获取已审批信息
+      getVeridiedAndAppyTipList() {
+        let that = this;
+        this.axios({
+          method: 'post',
+          url: 'api/tip/getVeridiedAndAppyTipList',
+          data: {
+            stuAccount: this.$store.state.user.account
+          }
+        }).then(res => {
+          that.tipsList[2].ApproveList = res.data.date.reverse();
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      // 获取个人所有历史请假申请记录
       queryHistoryTip() {
         let that = this;
         this.axios({
@@ -72,11 +119,11 @@
             stuAccount: this.$store.state.user.account
           }
         }).then(res => {
-          that.tipsList[1].ApproveList = res.data.date.reverse();
+          that.tipsList[3].ApproveList = res.data.date.reverse();
         }).catch(error => {
           console.log(error);
         })
-      }
+      },
     },
     components: {
       recordItem,
@@ -98,17 +145,16 @@
   position: fixed;
   margin: 30px 0 30px 15px;
   width: 60px;
-  height: 200px;
-  border-radius: 0 50px 0 50px;
+  border-radius: 0 30px 0 30px;
   box-shadow: 4px 4px 10px rgba(53, 74, 94, 0.25);
   overflow: hidden;
   z-index: 100;
 }
 
 .side-nav-bar li {
-  padding: 0 20px;
+  padding: 10px 20px;
   width: 65px;
-  height: 100px;
+  /* height: 100px; */
   color: #418771;
   font-weight: bold;
   cursor: pointer;
@@ -116,14 +162,14 @@
   border: 1px solid #418771;
 }
 
-.side-nav-bar li:nth-child(1) {
+/* .side-nav-bar li:nth-child(1) {
   padding-top: 25px;
   border-radius: 0 50px 0 0;
 }
 .side-nav-bar li:nth-child(2) {
   padding-top: 15px;
   border-radius: 0 0 0 50px;
-}
+} */
 
 .side-nav-bar li:hover {
   color: #333;

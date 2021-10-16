@@ -97,7 +97,7 @@
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
 		  },
-      //点击查看 按钮  的事件
+      //点击查看 按钮 的事件
       handleClick(info) {
         this.dialogVisible = true;
         this.dialogInfo = info;
