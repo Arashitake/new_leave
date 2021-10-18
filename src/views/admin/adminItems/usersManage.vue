@@ -40,7 +40,8 @@
   margin-top: 15px;
   height: 360px;
 }
-.el-tabs, .el-tabs--left{
-overflow-y: scroll;
-}
+
+/* .el-tabs, .el-tabs--left{
+  overflow-y: scroll;
+} */
 </style>

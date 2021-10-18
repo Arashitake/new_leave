@@ -7,8 +7,10 @@
       <el-tab-pane label="设置身份">
         <set-audit/>
       </el-tab-pane>
-      <el-tab-pane label="Role">Role</el-tab-pane>
-      <el-tab-pane label="Task">Task</el-tab-pane>
+      <el-tab-pane label="删除用户">
+        <delete-member/>
+      </el-tab-pane>
+      <!-- <el-tab-pane label="Task">Task</el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -16,6 +18,7 @@
 <script>
   import usersManage from './adminItems/usersManage.vue'
   import setAudit from './adminItems/setAudit.vue'
+  import deleteMember from './adminItems/deleteMember.vue'
 
   export default {
     name: 'managePage',
@@ -26,7 +29,8 @@
     },
     components: {
       usersManage,
-      setAudit
+      setAudit,
+      deleteMember
     }
   }
 </script>

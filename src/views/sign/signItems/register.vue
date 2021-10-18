@@ -86,10 +86,10 @@
         }).then(res => {
           console.log(res);
           this.userToken = {
-            account: res.data.student.stuAccount,
-            password: res.data.student.stuPwd,
-            name: res.data.student.stuName,
-            authority: authority
+            account: this.registerForm.account,
+            password: this.registerForm.password,
+            name: this.registerForm.name,
+            Authority: authority
           }
 
           // 将用户token保存到vuex
@@ -113,10 +113,10 @@
         }).then(res => {
           console.log(res);
           this.userToken = {
-            account: res.data.teacher.teaAccount,
-            password: res.data.teacher.teaPwd,
-            name: res.data.teacher.teaName,
-            authority: authority
+            account: this.registerForm.account,
+            password: this.registerForm.password,
+            name: this.registerForm.name,
+            Authority: authority
           }
 
           // 将用户token保存到vuex

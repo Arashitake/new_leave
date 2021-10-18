@@ -52,7 +52,7 @@
           url: 'api/tip/getAllTip',
 
         }).then(res => {
-          console.log(res);
+          // console.log(res);
           that.dataList = res.data.date;
         }).catch(error => {
           console.log(error);

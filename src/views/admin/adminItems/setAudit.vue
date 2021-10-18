@@ -7,12 +7,12 @@
       <el-button type="warning" @click="changeStudentType()">设置权限</el-button>
     </el-form>
 
-    <el-form class="set-audit-box">
+    <!-- <el-form class="set-audit-box">
       <el-form-item label="设置管理员（input account）：">
         <el-input v-model="input" type="text" style="margin-left: 10px"></el-input>
       </el-form-item>
       <el-button type="primary" @click="">设置 ADMIN</el-button>
-    </el-form>
+    </el-form> -->
   </div>
 </template>
 
@@ -53,7 +53,6 @@
 <style scoped>
 #audit-outsidebox {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 

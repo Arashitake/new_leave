@@ -131,7 +131,7 @@
             'Content-type':'application/json'
           },
         }).then(res => {
-          console.log(res);
+          // console.log(res);
           this.userToken = {
             account: res.data.student.stuAccount,
             password: res.data.student.stuPwd,

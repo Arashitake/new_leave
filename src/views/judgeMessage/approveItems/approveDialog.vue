@@ -145,7 +145,7 @@
             tipVeridied: this.approveForm.tipVeridied
           },
         }).then(res => {
-          console.log(res);
+          // console.log(res);
           this.reload();
         }).catch(error => {
           console.log(error);
@@ -162,7 +162,7 @@
             tipApplytime: new Date()
           },
         }).then(res => {
-          console.log(res);
+          // console.log(res);
         }).catch(error => {
           console.log(error);
         })
